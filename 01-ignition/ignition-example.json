@@ -1,0 +1,32 @@
+{
+  "ignition": {
+    "config": {},
+    "security": {
+      "tls": {}
+    },
+    "timeouts": {},
+    "version": "2.2.0"
+  },
+  "networkd": {},
+  "passwd": {},
+  "storage": {
+    "files": [
+      {
+        "filesystem": "root",
+        "group": {
+          "id": 501
+        },
+        "path": "/tmp/hello.txt",
+        "user": {
+          "id": 500
+        },
+        "contents": {
+          "source": "data:,Hello%20World!",
+          "verification": {}
+        },
+        "mode": 420
+      }
+    ]
+  },
+  "systemd": {}
+}

@@ -1,0 +1,9 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: quarkus-example
+bases:
+  - ../../base
+resources:
+  - manifests/namespace.yml
+  - manifests/quota.yml
+  - manifests/rbac.yml

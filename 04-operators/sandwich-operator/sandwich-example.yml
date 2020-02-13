@@ -1,0 +1,6 @@
+apiVersion: food.io/v1alpha1
+kind: Sandwich
+metadata:
+  name: vegan-example
+spec:
+  vegan: yes

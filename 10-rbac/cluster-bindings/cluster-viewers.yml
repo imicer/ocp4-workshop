@@ -1,0 +1,10 @@
+kind: ClusterRoleBinding
+apiVersion: v1
+metadata:
+  name: opentlc-cluster-viewers
+roleRef:
+  name: view
+subjects:
+  - kind: User
+    name: architect-a
+    apiGroup: rbac.authorization.k8s.io

@@ -1,0 +1,16 @@
+apiVersion: operator.openshift.io/v1
+kind: IngressController
+metadata:
+  name: default
+  namespace: openshift-ingress-operator
+spec:
+  replicas: ${ingress_default_replicas}
+  domain: ${ingress_default_domain}
+  nodePlacement:
+    nodeSelector:
+      matchLabels:
+        node-role.kubernetes.io/${ingress_default_node}: ""
+  endpointPublishingStrategy:
+      type: LoadBalancerService
+      loadBalancer:
+        scope: External

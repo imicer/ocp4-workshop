@@ -1,0 +1,11 @@
+storage:
+  files:
+    - path: /tmp/hello.txt
+      filesystem: root
+      contents:
+        inline: Hello World!
+      mode: 0644
+      user:
+        id: 500
+      group:
+        id: 501

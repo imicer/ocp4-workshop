@@ -1,0 +1,28 @@
+{
+    "ignition": {
+        "config": {
+            "append": [
+                {
+                    "source": "https://api-int.ocp.sandbox941.opentlc.com:22623/config/master",
+                    "verification": {}
+                }
+            ]
+        },
+        "security": {
+            "tls": {
+                "certificateAuthorities": [
+                    {
+                        "source": "data:text/plain;charset=utf-8;base64,LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURFRENDQWZpZ0F3SUJBZ0lJWkx0ayt3ZWtIYjh3RFFZSktvWklodmNOQVFFTEJRQXdKakVTTUJBR0ExVUUKQ3hNSmIzQmxibk5vYVdaME1SQXdEZ1lEVlFRREV3ZHliMjkwTFdOaE1CNFhEVEl3TURJd016RXlORGt5TVZvWApEVE13TURFek1URXlORGt5TVZvd0pqRVNNQkFHQTFVRUN4TUpiM0JsYm5Ob2FXWjBNUkF3RGdZRFZRUURFd2R5CmIyOTBMV05oTUlJQklqQU5CZ2txaGtpRzl3MEJBUUVGQUFPQ0FROEFNSUlCQ2dLQ0FRRUF5RFk1L2hrczgrM3MKeE4xSTZwb01tYjhPOXBTWFhiN1gwZnYwcEpQK2g1UGNURldQUGVOclI1V2tpZTB3WWtPb25TeVVlNEk1bHhlSAo4bG9sWVZZaldBWEhZTTBuQ0ZSelp6ZTdsZDNIaHFYV1pYVnpXY3VhWWlrczF0REpERjlxMDdZY09kNE40U0JuCmlBNE1Tb0FndzR2amh2dENkbXpQeERpZ2Nid1NmdXNBbDE1VjRLYzAzK3g5eFB4WndEejlRZHp1NG1HRS9BcFEKczRHenhmL2RaK2JLVmFEdW4wU1Qyb2loQ011WGU1dlh5cm5ham96NlZuQjdzSVk3Kyt3aEcxS05wNlFLTmlLOQpOclRFKzdGRGFUMzIxRjZZRkxBWmFJVHJ3YWZzdXg0eCszS2VwaHpYWVlVUTRPM3BTeGI1SGF3bFVIZGlWdDNGClZCNVN0RXRxY1FJREFRQUJvMEl3UURBT0JnTlZIUThCQWY4RUJBTUNBcVF3RHdZRFZSMFRBUUgvQkFVd0F3RUIKL3pBZEJnTlZIUTRFRmdRVWhDc1k3Y29aeHloS1RvdlpQUHYxSnQ0YXNnc3dEUVlKS29aSWh2Y05BUUVMQlFBRApnZ0VCQUdQM0hMMDRtMTdpaytvTG55Mk1vVHg2dTl2L1JJUDdsanZhNG82WmdCTzgzTFdtckYyamwyTGUyeW9GCmNKb1pyRXVDZ1liSlBDNTNGNHozUWlEOThBNHlpbWtqRXp0UFM5bG1WbDlwZG5yZnVrb0lBa2NXK1FMRXU1NTkKUEQ1ZTViLzhzRzNCVGQvYWhmdnNIc1JoYmhTc29KdGc5c1l5U2lSS2dIS1psY2YzM0dqMW9qV1d4VitVWldOZwp6ZXZBWDFjS2pjeU1FSml2dGdqcTV3Q1ovRWl6dzREa3pyRDhOcFRMLytrbGhMYU56Y0l6YkY5ZWJhTU56R1N2CklyelpCK2UxNEErOW81eWdQMUVzQUc5YUhGSWtuRlV4bHlRcGM4SXFMdHdNaG9ienNMc1RGTXJHN2hTdSsxMnEKaVFFQ0NVQi93NnhHZnpMNlQxUm9zZ2Z3S3M4PQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg==",
+                        "verification": {}
+                    }
+                ]
+            }
+        },
+        "timeouts": {},
+        "version": "2.2.0"
+    },
+    "networkd": {},
+    "passwd": {},
+    "storage": {},
+    "systemd": {}
+}

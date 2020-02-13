@@ -1,0 +1,39 @@
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfig
+metadata:
+  labels:
+    machineconfiguration.openshift.io/role: master
+  name: 50-master-timezone
+spec:
+  config:
+    ignition:
+      config: {}
+      security:
+        tls: {}
+      timeouts: {}
+      version: 2.2.0
+    networkd: {}
+    passwd: {}
+    storage: {}
+    systemd:
+      units:
+      - contents: |
+          [Unit]
+          # network interfaces are configured
+          Wants=network-online.target
+          After=network-online.target
+          # the system clock has synchronized
+          After=time-sync.target
+
+          [Service]
+          Type=oneshot
+          # set timezone to desired value
+          ExecStart=/bin/timedatectl set-timezone Europe/Madrid
+
+          [Install]
+          WantedBy=multi-user.target
+        enabled: true
+        name: one-timezone.service
+  fips: false
+  kernelArguments: null
+  osImageURL: ""

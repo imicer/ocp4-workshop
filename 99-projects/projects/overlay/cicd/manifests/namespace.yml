@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: cicd
+  labels:
+    openshift.io/cluster-logging: "true"
+    openshift.io/cluster-monitoring: "true"
+  annotations:
+    openshift.io/display-name: CICD
+    openshift.io/description: Manage CICD pipelines
+    openshift.io/requester: Kustomize

@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: quarkus-example
+  labels:
+    ingress-traffic.opentlc.com/internal: ""
+    openshift.io/cluster-logging: "true"
+    openshift.io/cluster-monitoring: "true"
+  annotations:
+    openshift.io/display-name: Quarkus Example
+    openshift.io/description: Quarkus example deployment
+    openshift.io/requester: Kustomize
