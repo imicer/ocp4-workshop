@@ -16,7 +16,7 @@ spec:
       mode: console
     security:
       admin_user: admin
-      admin_password: c623b2bdfafd2837c080a21a203ecacd
+      admin_password: 89ceb92b2aa24c0cc7476c51
   dashboardLabelSelector:
     - matchExpressions:
         - key: app

@@ -1,0 +1,15 @@
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfig
+metadata:
+  labels:
+    machineconfiguration.openshift.io/role: master
+  name: 99-master-ssh
+spec:
+  config:
+    ignition:
+      version: 2.2.0
+    passwd:
+      users:
+      - name: core
+        sshAuthorizedKeys:
+          - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDzM4djCEsaC/d/6d8tRy/NW22KOBruO9iov64vRgZT+bBh74IjKrYpCdnel4c+veRbcdxtIu6gYPJ4amf8slJhq4lKg1MRkOPIlU1nI1p1aU57m+hOmCqJgRNIIZMhT646Mrei1/ULikr5qVuk3xzfA5nQFYNIAmCz+o2hOfA/ZrIrLhZCE6Eg9bMuC26PWbHv/iehd8i6UqPhPzUPauGYEeoWJBAPcEuHWeEZndfo5+pAq8kxubrgPs/eBok3kJiEeAcy+PSHyZRsD3rzdip7Irk2RXxXRa4gRWq5sMOgPH2TVU7JrzCqJMrtGtFAKoOsLtwU8r4zN9Ka1JG5Y7EFbMeY9YQ0foPipyAjUMRVz8Gg/kBtegU03Sgc+y1csuNYHkyx4JFOqpOxIoVUfJVfIfICAqy4MmLqve6xvnak4i5WW5kc94nZiZTMcKSMv8wT3eOYofhyOpfkOdjdCcQvwxgBH3Vz7W4h4Tpu9U4VH+7Ls+WKM0frNmv89wbRbCE= samu@redhat

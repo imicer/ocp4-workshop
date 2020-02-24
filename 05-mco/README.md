@@ -18,10 +18,17 @@ oc apply -f machine-config/worker/50-worker-timezone.yml
 
 ## Infranstructure configuration
 
-Create a new `mcp` for infrastructure nodes.
+1. Create a new `mcp` for infrastructure nodes.
 
 ```
 oc apply -f machine-config-pool/infra.yml
+```
+
+2. Do not schedule pods in non-workers nodes by default.
+
+```
+oc patch scheduler cluster --type='json' \
+  -p='[{"op":"replace","path":"/spec/defaultNodeSelector","value":"node-role.kubernetes.io/worker="}]'
 ```
 
 ## References
