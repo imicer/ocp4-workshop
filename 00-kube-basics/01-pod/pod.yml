@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: container-example
+spec:
+  containers:
+    - name: shell-one
+      image: ubi8
+      imagePullPolicy: IfNotPresent
+      command:
+        - sleep
+        - "3600"
+    - name: shell-two
+      image: ubi8
+      imagePullPolicy: IfNotPresent
+      command:
+        - sleep
+        - "3600"
+  restartPolicy: Always
