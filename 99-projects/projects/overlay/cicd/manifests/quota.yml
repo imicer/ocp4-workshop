@@ -6,3 +6,5 @@ spec:
   hard:
     requests.cpu: "0"
     requests.memory: "0"
+    limits.cpu: "0"
+    limits.memory: "0"
