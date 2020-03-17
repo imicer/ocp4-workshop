@@ -1,0 +1,11 @@
+# Do not include the following folders and files
+openshift-install*
+.openshift_*
+ssh/*
+installation/*
+
+# Keep gitkeep in all folders
+!.gitkeep
+
+# Keep template files
+!*.tpl

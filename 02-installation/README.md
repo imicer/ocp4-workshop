@@ -1,89 +1,53 @@
-# OCP4 installation
+# Install Openshift 4.2 IPI
 
-Install OPC 4 in AWS using IPI procedure.
+## Instrucctions
 
-## Requirements
+Create a `environment-name.env` file with the specific environment configuration parameters.
 
-- OpenTLC account.
+### Openshift 4
+
+Set configuration parameters for `Openshift`.
+
+```bash
+OCP_CLUSTER_NAME="ocp"
+OCP_DNS_DOMAIN="sandbox1467.opentlc.com"
+OCP_PULL_SECRET='{"auths":{"cloud.openshift.com":{"auth":"...'
+OCP_SSH_PUBKEY="ssh-rsa AAAAB3NzaC1yc2EA..."
+```
+
+### Cloud provider
+
+Set configuration parameters for the corresponding `cloud provider`.
+
+```bash
+AWS_REGION="eu-central-1"
+AWS_ACCESS_KEY="1234"
+AWS_SECRET_KEY="S3CR3T!"
+```
 
 ## Installation
 
-1. Load environment configuration.
+Run the autonomus installer and wait until the installation is finished.
 
-```
-source environment/<env>
-```
-
-2. Connect to the bastion using SSH.
-
-```
-ssh ${BASTION_SSH_USER}@${BASTION_SSH_HOST}
+```bash
+./install.sh <environment-name>
 ```
 
-3. Create installation directories.
+## SSH bastion
 
-```
-mkdir -p ocp-installer/configuration
-```
-
-4. Download the installer from **[Red Hat official site](https://mirror.openshift.com/pub/openshift-v4/clients/ocp)**.
-
-```
-wget https://mirror.openshift.com/pub/openshift-v4/clients/ocp/4.2.16/openshift-install-linux-4.2.16.tar.gz
-```
-
-5. Extract the installer.
-
-```
-tar -xvf openshift-install-linux-4.2.16.tar.gz
-```
-
-6. Render installer configuration.
-
-```
-envsubst < configuration/install-config.yaml.tpl > configuration/install-config.yaml
-```
-
-7. Copy  `install-config.yaml` into bastion.
-
-```
-scp configuration/install-config.yaml ${BASTION_SSH_USER}@${BASTION_SSH_HOST}:ocp-installer/configuration
-```
-
-8. Run installer to generate manifest files (must introduce AWS credentials).
-
-```
-./openshift-install create manifests --dir=configuration --log-level=debug
-```
-
-9. Run installer to generate ignition from manifest files.
-
-```
-./openshift-install create ignition-configs --dir=configuration --log-level=debug
-```
-
-10. Finally, run the installer to setup the cluster.
-
-```
-./openshift-install create cluster --dir=configuration --log-level=debug
-```
-
-## Additional bastion
-
-1. Create a new instance with the following options.
+Create a new instance with the following options.
 
 - **Network**: Select OCP VPC.
 - **Subnet**: Select any public subnet.
 - **Auto-asign Public IP**: Enable.
 - **Capacity reservation**: None.
 
-2. Set userdata to allow SSH.
+Set userdata to allow SSH.
 
-```
-envsubst < bastion/cloudinit.tpl | xsel -ib
+```bash
+envsubst < bastion/cloudinit.tpl
 ```
 
 ## References
 
-- https://docs.openshift.com/container-platform/4.2/installing/installing_aws
-- https://cloud.redhat.com/openshift/install/aws/installer-provisioned
+- https://docs.openshift.com/container-platform/4.2/welcome/index.html
