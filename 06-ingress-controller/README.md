@@ -1,6 +1,6 @@
-# Router sharding
+# Ingress controller
 
-Deploy custom ingress controllers.
+Deploy additional ingress controllers for consuming Openshift services from out of the cluster.
 
 ## Requirements
 
@@ -54,7 +54,7 @@ oc create secret tls internal-apps-cert \
 Deploy ingress controller.
 
 ```
-envsubst < ingress-controller/internal-apps.yml | oc apply -f -
+envsubst < manifests/internal-apps.yml | oc apply -f -
 ```
 
 ### Create a DNS entry for LB

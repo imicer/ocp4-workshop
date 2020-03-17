@@ -1,0 +1,13 @@
+apiVersion: operators.coreos.com/v1
+kind: OperatorGroup
+metadata:
+  annotations:
+    olm.providedAPIs: BackingStore.v1alpha1.noobaa.io,BucketClass.v1alpha1.noobaa.io,CephBlockPool.v1.ceph.rook.io,CephCluster.v1.ceph.rook.io,CephNFS.v1.ceph.rook.io,CephObjectStore.v1.ceph.rook.io,CephObjectStoreUser.v1.ceph.rook.io,NooBaa.v1alpha1.noobaa.io,OCSInitialization.v1.ocs.openshift.io,StorageCluster.v1.ocs.openshift.io,StorageClusterInitialization.v1.ocs.openshift.io
+  name: openshift-storage
+  namespace: openshift-storage
+spec:
+  targetNamespaces:
+    - openshift-storage
+status:
+  namespaces:
+    - openshift-storage

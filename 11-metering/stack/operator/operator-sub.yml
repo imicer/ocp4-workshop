@@ -1,0 +1,12 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: metering-ocp
+  namespace: openshift-metering
+spec:
+  name: metering-ocp
+  channel: "4.3"
+  installPlanApproval: Automatic # Change to Manual to avoid corrupted updates
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
+  startingCSV: metering-operator.4.3.3-202002171705
