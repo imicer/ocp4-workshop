@@ -1,3 +1,0 @@
-# Tekton pipelines
-
-WIP
