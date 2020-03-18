@@ -1,0 +1,12 @@
+apiVersion: metering.openshift.io/v1
+kind: Report
+metadata:
+  name: namespace-persistentvolumeclaim-usage-monthly
+  namespace: openshift-metering
+  labels:
+    report-frequency: monthly
+spec:
+  query: namespace-persistentvolumeclaim-usage
+  schedule:
+    period: cron
+    expression: "0 0 1 * *"

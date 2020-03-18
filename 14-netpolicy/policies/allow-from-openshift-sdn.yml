@@ -1,0 +1,15 @@
+# default namespace must be previously patched
+# oc label namespace default network.openshift.io/policy-group: host-network
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-from-openshift-sdn
+spec:
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          network.openshift.io/policy-group: host-network
+  podSelector: {}
+  policyTypes:
+  - Ingress
