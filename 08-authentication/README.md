@@ -1,45 +1,59 @@
 # Authentication
 
-Configure authentication providers (local authentication, LDAP, OIDC, etc).
+The OpenShift Container Platform master includes a built-in OAuth server. Users obtain OAuth access tokens to authenticate themselves to the API.
 
-## Local authentication
+When a person requests a new OAuth token, the OAuth server uses the configured identity provider to determine the identity of the person making the request.
 
-1. Create `htpasswd` with all users.
+It then determines what user that identity maps to, creates an access token for that user, and returns the token for use.
 
-```
-htpasswd -B -b users/htpasswd recovery *****
-htpasswd -B -b users/htpasswd platform-admin-a *****
-htpasswd -B -b users/htpasswd architect-a *****
-htpasswd -B -b users/htpasswd developer-a *****
-```
+## OAuth providers
 
-2. Create `htpass-users` secret.
+There are many different OAuth providers available.
 
-```
-oc create secret generic htpass-users \
-    --from-file=htpasswd=users/htpasswd \
-    --namespace openshift-config
-```
+- HTPasswd
+- LDAP
+- OpenID
+- BasicAuth
+- Github
+- Gitlab
+- Google
+- Keystone
 
-3. Add `cluster-admin` role to user `recovery`.
+Create the `OAuth` CR to configure identity providers.
 
-```
-oc adm policy add-cluster-role-to-user cluster-admin recovery \
-  --rolebinding-name=recovery-cluster-admin
-```
-
-## Deploy Oauth
-
-1. Deploy OAuth configuration.
-
-```
-oc apply -f oauth/cluster-oauth.yml
+```yaml
+apiVersion: config.openshift.io/v1
+kind: OAuth
+metadata:
+  name: cluster
+spec:
+  identityProviders:
+    - name: Example provider
+      type: <provider>
 ```
 
-2. Remove `kubeadmin` user (optional).
+### htpasswd
 
+Create the configmap `htpasswd-users` with the passwd information in `openshift-config` namespace.
+
+```yaml
+spec:
+  identityProviders:
+    ...
+    - name: Local authentication
+      type: HTPasswd
+      mappingMethod: claim
+      htpasswd:
+        fileData:
+          name: htpasswd-users
 ```
-oc delete secret kubeadmin -n kube-system
+
+## Deployment
+
+Apply the changes given by the previous configuration.
+
+```bash
+./install.sh
 ```
 
 ## References

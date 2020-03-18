@@ -9,4 +9,4 @@ spec:
       mappingMethod: claim
       htpasswd:
         fileData:
-          name: htpass-users
+          name: htpasswd-users
