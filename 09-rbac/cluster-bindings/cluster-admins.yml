@@ -1,10 +1,10 @@
 kind: ClusterRoleBinding
 apiVersion: v1
 metadata:
-  name: opentlc-cluster-admins
+  name: 99-cluster-admins
 roleRef:
   name: cluster-admin
 subjects:
-  - kind: User
-    name: platform-admin-a
+  - kind: Group
+    name: DevOps
     apiGroup: rbac.authorization.k8s.io
