@@ -36,7 +36,7 @@ Deploy CEPH cluster.
 oc apply -f ocs/ceph-cluster.yml
 ```
 
-## Automation
+## Deployment
 
 Apply the changes given by the previous configuration.
 
