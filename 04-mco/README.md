@@ -49,7 +49,7 @@ matchLabels:
 
 The default scheduler can be configured to allocate pods always in worker nodes to avoid running applications in infra nodes.
 
-```
+```yaml
 apiVersion: config.openshift.io/v1
 kind: Scheduler
 metadata:
@@ -61,6 +61,8 @@ spec:
     name: ""
 status: {}
 ```
+
+**IMPORTANT**: This is not well tested and many operators failed to use default the node selector. Use this property at namespace label.
 
 ## Configuration
 

@@ -19,6 +19,6 @@ spec:
     matchLabels:
       route-type: internal
   endpointPublishingStrategy:
-      type: LoadBalancerService
-      loadBalancer:
-        scope: Internal
+    type: LoadBalancerService
+    loadBalancer:
+      scope: Internal
