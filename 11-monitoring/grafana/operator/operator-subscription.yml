@@ -5,7 +5,8 @@ metadata:
   namespace: grafana-operator
 spec:
   name: grafana-operator
-  source: community-operators
+  source: operatorhubio-catalog
   sourceNamespace: openshift-marketplace
-  channel: alpha
   installPlanApproval: Automatic
+  channel: alpha
+  installedCSV: grafana-operator.v3.0.2

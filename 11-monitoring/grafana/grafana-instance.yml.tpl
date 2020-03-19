@@ -16,7 +16,7 @@ spec:
       mode: console
     security:
       admin_user: admin
-      admin_password: 89ceb92b2aa24c0cc7476c51
+      admin_password: ${GRAFANA_ADMIN_PASSWORD}
   dashboardLabelSelector:
     - matchExpressions:
         - key: app
