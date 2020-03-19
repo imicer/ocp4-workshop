@@ -6,33 +6,33 @@ Ceph uniquely delivers object, block, and file storage in one unified system. Ce
 
 Create the `openshift-storage` namespace.
 
-```
+```bash
 oc apply -f ocs/operator/namespace.yml
 ```
 
 Create the operator group for OCS.
 
-```
+```bash
 oc apply -f ocs/operator/operator-group.yml
 ```
 
 Subscribe to OCS operator.
 
-```
+```bash
 oc apply -f ocs/operator/subscription.yml
 ```
 
 Disable automatic updates.
 
-```
+```bash
 oc patch sub ocs-operator --type=merge --patch '{"spec":{"installPlanApproval":"Manual"}}'
 ```
 
-## CEPH cluster
+## Ceph cluster
 
-Deploy CEPH cluster.
+Deploy Ceph cluster.
 
-```
+```bash
 oc apply -f ocs/ceph-cluster.yml
 ```
 
