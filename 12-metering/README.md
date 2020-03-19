@@ -2,50 +2,61 @@
 
 Metering focuses primarily on in-cluster metric data using Prometheus as a default data source, enabling users of metering to do reporting on pods, namespaces, and most other Kubernetes resources.
 
-## Installation
+## Operator
 
 Create `openshift-metering` namespace.
 
-```
-oc apply -f stack/operator/namespace.yml
+```bash
+oc apply -f metering-stack/operator/namespace.yml
 ```
 
 Create the operator group for metering stack.
 
-```
-oc apply -f stack/operator/operator-og.yml
+```bash
+oc apply -f metering-stack/operator/operator-group.yml
 ```
 
 Subscripbe to metering operator.
 
-```
-oc apply -f stack/operator/operator-sub.yml
+```bash
+oc apply -f metering-stack/operator/subscription.yml
 ```
 
-Deploy metering stack.
+## Metering stack
 
-```
-oc apply -f stack
+Deploy the metering stack.
+
+```bash
+oc apply -f metering-stack
 ```
 
 ## Reporting
 
-1. Schedule cluster reports.
+Schedule cluster reports.
 
-```
+```bash
 oc apply -f reports
 ```
 
-2. Download report.
+Download a report.
 
-```
+```bash
 METERING_API_URL="$(oc get routes metering -o jsonpath='{.spec.host}')"
 METERING_API_TOKEN="$(oc get secret $(oc get sa reports-viewer -o json |\
   jq -r '.secrets[] | select(.name|test(".token.")) | .name') -o json | jq -r '.data.token' | base64 -d)"
 METERING_REPORT_NAME="namespace-cpu-request"
 METERING_REPORT_FORMAT="json"
 
-curl --silent --insecure -H "Authorization: Bearer ${METERING_API_TOKEN}" "https://${METERING_API_URL}/api/v1/reports/get?name=${METERING_REPORT_NAME}&namespace=openshift-metering&format=$METERING_REPORT_FORMAT" | jq '.'
+curl --silent --insecure -H "Authorization: Bearer ${METERING_API_TOKEN}" \
+  "https://${METERING_API_URL}/api/v1/reports/get?name=${METERING_REPORT_NAME}&namespace=openshift-metering&format=$METERING_REPORT_FORMAT" | jq '.'
+```
+
+## Deployment
+
+Apply the changes given by the previous configuration.
+
+```bash
+./install.sh
 ```
 
 ## References

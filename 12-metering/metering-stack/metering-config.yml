@@ -6,7 +6,7 @@ spec:
   reporting-operator:
     spec:
       nodeSelector:
-        node-role.kubernetes.io/worker: ""
+        node-role.kubernetes.io/infra: ""
       resources:
         limits:
           cpu: "1"
@@ -39,7 +39,7 @@ spec:
     spec:
       coordinator:
         nodeSelector:
-          node-role.kubernetes.io/worker: ""
+          node-role.kubernetes.io/infra: ""
         resources:
           limits:
             cpu: "4"
@@ -61,9 +61,9 @@ spec:
     hive:
       type: sharedPVC
       sharedPVC:
-        storageClass: gp2
+        storageClass: ocs-storagecluster-cephfs
         createPVC: true
-        size: 100Gi
+        size: 20Gi
   permissions:
     # This also gives permissions query the results from the reporting REST API.
     reportingViewers:
