@@ -15,117 +15,74 @@ Apply a custom ConfigMap in `openshift-monitoring` namespace for tuning the foll
 oc apply -f monitoring-stack
 ```
 
-## Additional Grafana
+## Grafana Operator
 
-Deploy a new Grafana using community operator for creating custom dashboards.
-
-### Deploy Grafana operator
-
-Create namespace for Grafana operator.
+Create the `grafana-operator`.
 
 ```bash
-oc create ns grafana-operator
+oc apply -f grafana/operator/namespace.yml
 ```
 
-Create operator group.
+Create the operator group for Grafana.
 
 ```bash
-oc apply -f grafana/operator-og.yml
+oc apply -f grafana/operator/operator-group.yml
 ```
 
 Subscribe to Grafana operator.
 
 ```bash
-oc apply -f grafana/operator-subscription.yml
+oc apply -f grafana/subscription.yml
 ```
 
-Deploy Grafana instance.
+## Grafana
+
+Deploy a new Grafana using community operator for creating custom dashboards.
 
 ```bash
-oc apply -f grafana/grafana-instance.yml
+export GRAFANA_ADMIN_PASSWORD="$(openssl rand -hex 16)"
+envsubst < grafana/grafana-instance.yml.tpl | oc apply -f -
 ```
 
-### Retrieve Prometheus credentials
+### Configure Prometheus OCP as datasource
 
-There are two different ways for authenticating against Prometheus OAuth, using same user and password than installed Grafana or using a dedicated service account (recommended).
-
-#### Basic authentication
-
-Get Prometheus user.
+Set Prometheus user.
 
 ```bash
-oc get secret grafana-datasources -o jsonpath='{.data.prometheus\.yaml}{"\n"}' -n openshift-monitoring |\
-  base64 -d | jq -r '.datasources[] | select(.access=="proxy").basicAuthUser'
+export PROMETHEUS_USER="$(oc get secret grafana-datasources -o jsonpath='{.data.prometheus\.yaml}{"\n"}' -n openshift-monitoring |\
+  base64 -d | jq -r '.datasources[] | select(.access=="proxy").basicAuthUser')"
 ```
 
-Get Prometheus password.
+Set Prometheus password.
 
 ```bash
-oc get secret grafana-datasources -o jsonpath='{.data.prometheus\.yaml}{"\n"}' -n openshift-monitoring |\
-  base64 -d | jq -r '.datasources[] | select(.access=="proxy").basicAuthPassword'
+export PROMETHEUS_PASSWORD="$(oc get secret grafana-datasources -o jsonpath='{.data.prometheus\.yaml}{"\n"}' -n openshift-monitoring |\
+  base64 -d | jq -r '.datasources[] | select(.access=="proxy").basicAuthPassword')"
 ```
 
-#### Bearer token
-
-Create a service account for Prometheus OAuth.
+Create the prometheus datasource using the `GrafanaDataSource` CR.
 
 ```bash
-oc create sa prometheus-viewer
+envsubst < grafana/datasources/prometheus-ocp4.yml.tpl | oc apply -f -
 ```
 
-Allow read only access to the service account.
+### Dashboards
+
+Import different dashboards using the `GrafanaDashboard` CR.
 
 ```bash
-oc adm policy add-cluster-role-to-user cluster-monitoring-view \
-  --rolebinding-name=prometheus-view \
-  --serviceaccount=prometheus-viewer \
-  --namespace=grafana-operator
+oc apply -f grafana/dashboards
 ```
 
-Get service account token.
+## Deployment
+
+Apply the changes given by the previous configuration.
 
 ```bash
-export PROMETHEUS_TOKEN=$(oc get secret $(oc get sa prometheus-viewer -o json |\
-  jq -r '.secrets[] | select(.name|test(".token.")) | .name') -o json |\
-  jq -r '.data.token' | base64 -d)
-```
-
-### Set datasource
-
-Generate custom datasource for prometheus.
-
-```bash
-envsubst < grafana/prometheus-ocp-datasource.json.tpl > grafana/prometheus-ocp-datasource.json
-```
-
-Import datasource in Grafana (create API key before).
-
-```bash
-GRAFANA_API_KEY="" # From GUI
-GRAFANA_URL=$(oc get route grafana-route -o "custom-columns=URL:.spec.host" | grep -v URL)
-curl -k -X POST \
-    --header "Content-Type: application/json" \
-    --header "Authorization: Bearer ${GRAFANA_API_KEY}" \
-    --data @grafana/prometheus-ocp-datasource.json \
-    "https://${GRAFANA_URL}/api/datasources"
-```
-
-### Custom dashboards
-
-Import different dashboards.
-
-- **Node exporter**: 11173
-- **HAProxy**: 2428
-
-## Namespace metrics
-
-If you want to get prometheus metrics and alerts, add the `cluster-monitoring` label to the namespace.
-
-```
-oc label namespace <namespace> "openshift.io/cluster-monitoring=true"
+./install.sh
 ```
 
 ## References
 
--   https://docs.openshift.com/container-platform/4.2/monitoring/cluster-monitoring/configuring-the-monitoring-stack.html
--   https://docs.openshift.com/container-platform/4.2/storage/understanding-persistent-storage.html
+- https://docs.openshift.com/container-platform/4.2/monitoring/cluster-monitoring/configuring-the-monitoring-stack.html
+- https://docs.openshift.com/container-platform/4.2/storage/understanding-persistent-storage.html
