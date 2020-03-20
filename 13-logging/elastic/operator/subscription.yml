@@ -1,11 +1,12 @@
 apiVersion: operators.coreos.com/v1alpha1
 kind: Subscription
 metadata:
-  name: cluster-logging
-  namespace: openshift-logging
+  name: elastic-operator
+  namespace: openshift-elastic-operator
 spec:
-  name: cluster-logging
+  name: elasticsearch-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace
   channel: "4.2"
   installPlanApproval: Automatic
+  startingCSV: elasticsearch-operator.4.2.23-202003090920

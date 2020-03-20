@@ -11,16 +11,15 @@ spec:
       nodeCount: 3
       redundancyPolicy: SingleRedundancy
       storage:
-        storageClassName: gp2
         size: 50G
+        storageClassName: ocs-storagecluster-ceph-rbd
       nodeSelector:
         node-role.kubernetes.io/infra: ""
       resources:
         limits:
-          cpu: "1"
-          memory: "8Gi"
+          memory: "16Gi"
         requests:
-          cpu: "1"
+          cpu: "2"
           memory: "8Gi"
   visualization:
     type: kibana

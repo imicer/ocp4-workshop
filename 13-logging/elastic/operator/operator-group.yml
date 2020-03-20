@@ -3,5 +3,4 @@ kind: OperatorGroup
 metadata:
   name: elastic-operator
   namespace: openshift-elastic-operator
-  annotations:
-    olm.providedAPIs: Elasticsearch.v1.logging.openshift.io
+spec: {}

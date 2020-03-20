@@ -62,6 +62,42 @@ oc apply -f logging/operator-og.yml
 oc apply -f logging/cluster-logging.yml
 ```
 
+## Modify Curator configuration
+
+1. Delete old Curator configuration.
+
+```
+oc delete configmap curator -n openshift-logging
+```
+
+2. Apply new configuration.
+
+```
+oc create configmap curator \
+    --from-file=curator5.yaml=curator/curator5.yaml \
+    --from-file=config.yaml=curator/config.yaml \
+    --namespace openshift-logging
+```
+
+3. Change log leveg debug for Curator traces.
+
+```
+oc set env cronjob/curator CURATOR_LOG_LEVEL=DEBUG CURATOR_SCRIPT_LOG_LEVEL=DEBUG
+```
+
+4. Force Curator to run new configuration.
+
+```
+oc create job --from=cronjob/curator curator-manual-"$(date +%s)"
+```
+
+5. Check if everything is working fine and set log level to normal again.
+
+```
+oc set env cronjob/curator CURATOR_LOG_LEVEL=ERROR CURATOR_SCRIPT_LOG_LEVEL=ERROR
+```
+
+
 ## References
 
 -   https://docs.openshift.com/container-platform/4.2/logging/cluster-logging-deploying.html
