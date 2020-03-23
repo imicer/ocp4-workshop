@@ -64,6 +64,21 @@ status: {}
 
 **IMPORTANT**: This is not well tested and many operators failed to use default the node selector. Use this property at namespace label.
 
+## Upgrade path
+
+Select the channel and the architecture to get the upgrade path.
+
+```bash
+OCP_CHANNEL="stable-4.3"
+OCP_ARCHITECTURE="amd64"
+```
+
+Run the following command to generate the upgrade path graph and open the `SVG` file with your favourite image viewer.
+
+```bash
+curl -sH "Accept:application/json" "https://api.openshift.com/api/upgrades_info/v1/graph?channel=${OCP_CHANNEL}&arch=${OCP_ARCHITECTURE}" | upgrade/graph.sh | dot -Tsvg > upgrade/graph-${OCP_CHANNEL}.svg
+```
+
 ## Configuration
 
 Apply the changes given by the previous configuration.
