@@ -6,9 +6,7 @@ set -o pipefail # return the exit code of the last command that threw a non-zero
 
 # Input variables
 OCP_ENVIRONMENT="$1"
-
-# Load environment configuration
-source environment/${OCP_ENVIRONMENT}.env
+OCP_API_SERVER="$(oc whoami --show-server | sed -e "s/[^/]*\/\/\([^@]*@\)\?\([^:/]*\).*/\2/")"
 
 # Generate a new certificate for the API server using letsencrypt
 OCP_API_CERTS="$(pwd)/certificates/${OCP_ENVIRONMENT}"

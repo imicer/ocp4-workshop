@@ -31,7 +31,7 @@ else
 fi
 
 OCP_INFRA_NODES="$(oc get machine -l "machine.openshift.io/cluster-api-machine-role=infra" \
-  -o jsonpath="{.items[?(@.status.nodeRef)].status.nodeRef.name}" -n openshit-machine-api)"
+  -o jsonpath="{.items[?(@.status.nodeRef)].status.nodeRef.name}" -n openshift-machine-api)"
 
 for OCP_INFRA_NODE in ${OCP_INFRA_NODES}; do
     oc label node ${OCP_INFRA_NODE} --overwrite=true \
