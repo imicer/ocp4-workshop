@@ -27,7 +27,7 @@ spec:
 Apply the changes given by the previous configuration.
 
 ```bash
-./install.sh <environment-name>
+./install.sh
 ```
 
 ## References

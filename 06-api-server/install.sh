@@ -5,7 +5,6 @@ set -o nounset  # exit when use undeclared variables
 set -o pipefail # return the exit code of the last command that threw a non-zero
 
 # Input variables
-OCP_ENVIRONMENT="$1"
 OCP_API_SERVER="$(oc whoami --show-server |\
     sed -e "s/[^/]*\/\/\([^@]*@\)\?\([^:/]*\).*/\2/")"
 
