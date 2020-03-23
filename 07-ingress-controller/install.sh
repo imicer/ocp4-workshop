@@ -16,6 +16,8 @@ oc apply -f ingress-controllers/default.yml
 # Deploy new ingress controller for internal applications
 INTERNAL_APPS_CERTS="certificates/${OCP_ENVIRONMENT}/internal-apps"
 
+mkdir -p ${INTERNAL_APPS_CERTS}
+
 if [ ! -f "${INTERNAL_APPS_CERTS}/tls.key" ]; then
     openssl genrsa 4096 > ${INTERNAL_APPS_CERTS}/tls.key
 
