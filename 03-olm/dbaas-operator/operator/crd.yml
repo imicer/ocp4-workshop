@@ -1,0 +1,27 @@
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  name: databases.example.io
+  description: Hello world
+spec:
+  group: example.io
+  version: v1alpha1
+  names:
+    kind: DataBase
+    singular: database
+    plural: databases
+    shortNames: [db, dbs]
+  scope: Namespaced
+  validation:
+    openAPIV3Schema:
+      required: [spec]
+      properties:
+        spec:
+          description: Create a DBaaS (Database as a Service)
+          type: object
+          required: [vendor]
+          properties:
+            vendor:
+              description: Database vendor
+              type: string
+              enum: [mongodb, mariadb]

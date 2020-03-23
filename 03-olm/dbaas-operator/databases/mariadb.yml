@@ -1,0 +1,7 @@
+apiVersion: example.io/v1alpha1
+kind: DataBase
+metadata:
+  name: mariadb-example
+  namespace: dbass-instances
+spec:
+  vendor: mariadb
