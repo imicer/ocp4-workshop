@@ -89,6 +89,14 @@ Get current operator status.
 oc get csv ${operator_name} -n ${operator_namespace}
 ```
 
+## Configuration
+
+Apply the changes given by the previous configuration.
+
+```bash
+./install.sh
+```
+
 ## References
 
 - https://github.com/kubernetes/sample-controller
