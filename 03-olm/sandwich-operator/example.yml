@@ -1,7 +1,0 @@
-apiVersion: food.io/v1alpha1
-kind: Sandwich
-metadata:
-  name: vegan-example
-  namespace: sandwich-operator
-spec:
-  vegan: yes
