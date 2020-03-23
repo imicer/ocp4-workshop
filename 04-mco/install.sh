@@ -8,8 +8,8 @@ set -o pipefail # return the exit code of the last command that threw a non-zero
 oc apply -f mcp
 
 # Change default scheduler configuration
-oc patch scheduler cluster --type='json' \
-    -p='[{"op":"replace","path":"/spec/defaultNodeSelector","value":"node-role.kubernetes.io/worker="}]'
+# oc patch scheduler cluster --type='json' \
+#     -p='[{"op":"replace","path":"/spec/defaultNodeSelector","value":"node-role.kubernetes.io/worker="}]'
 
 # Apply custom configuration for workers
 oc apply -f machine-config/worker
