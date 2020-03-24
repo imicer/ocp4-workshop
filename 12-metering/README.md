@@ -16,7 +16,7 @@ Create the operator group for metering stack.
 oc apply -f metering-stack/operator/operator-group.yml
 ```
 
-Subscripbe to metering operator.
+Subscribe to metering operator.
 
 ```bash
 oc apply -f metering-stack/operator/subscription.yml

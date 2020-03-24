@@ -46,9 +46,13 @@ oc patch sub cluster-logging-operator --type=merge \
     --namespace openshift-logging
 
 # Deploy EFK stack
-oc apply -f cluster-logging && sleep 2
+oc apply -f cluster-logging && sleep 5
 
 echo "Kibana URL is https://$(oc get route kibana -o jsonpath="{.spec.host}" -n openshift-logging)"
 
 # Configure Curator
-echo "WIP"
+oc create cm curator --dry-run -o yaml \
+    --from-file=curator5.yaml=cluster-logging/curator/curator5.yaml \
+    --from-file=config.yaml=cluster-logging/curator/config.yaml \
+    --namespace openshift-logging |\
+        oc replace cm --filename=- --namespace openshift-logging

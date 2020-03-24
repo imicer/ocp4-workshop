@@ -1,5 +1,3 @@
-# Logging example curator config file
-
 # Default log retention
 .defaults:
  delete:
@@ -8,10 +6,10 @@
 # Log retention for operations index
 .operations:
  delete:
-   days: 15
+   days: 2
 
 # Log retention for applications index
 .regex:
   - pattern: '^project\..*$'
     delete:
-      days: 15
+      days: 7
