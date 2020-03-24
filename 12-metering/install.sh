@@ -5,7 +5,7 @@ set -o nounset  # exit when use undeclared variables
 set -o pipefail # return the exit code of the last command that threw a non-zero
 
 # Get input variables
-METERING_OPERATOR_VERSION="metering-operator.4.3.5-202003020549"
+METERING_OPERATOR_VERSION="metering-operator.4.3.7-202003192254"
 METERING_OPERATOR_STATUS="Installing"
 
 # Install Metering operator

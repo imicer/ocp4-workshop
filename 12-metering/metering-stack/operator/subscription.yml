@@ -9,4 +9,4 @@ spec:
   installPlanApproval: Automatic
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-  startingCSV: metering-operator.4.3.5-202003020549
+  startingCSV: metering-operator.4.3.7-202003192254
