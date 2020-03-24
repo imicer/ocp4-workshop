@@ -1,0 +1,130 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: smtp-fake-server
+  labels:
+    application: smtp
+    component: server
+spec:
+  replicas: 1
+  serviceName: smtp-fake-server
+  updateStrategy:
+    type: RollingUpdate
+    rollingUpdate:
+      partition: 0
+  selector:
+    matchLabels:
+      application: smtp
+      component: server
+  template:
+    metadata:
+      labels:
+        application: smtp
+        component: server
+    spec:
+      containers:
+        # TLS SMTP Proxy
+        - name: starttls-proxy
+          # Container image
+          image: quay.io/samuvl/stunnel-proxy:1.1.1
+          # Environment configuration
+          env:
+            - name: LISTENING_PORT
+              value: "9025"
+            - name: SERVICE_NAME
+              value: smtp
+            - name: SERVICE_HOST
+              value: localhost
+            - name: SERVICE_PORT
+              value: "5025"
+            - name: SERVICE_PROTOCOL
+              value: smtp
+            - name: STUNNEL_CERTS_DIR
+              value: /tmp/stunnel/certificates
+          # List of ports to expose from the container
+          ports:
+            - name: smtp-tls
+              containerPort: 9025
+          # Mounts from .spec.volumes
+          volumeMounts:
+            - name: certificates
+              mountPath: /tmp/stunnel/certificates
+          # Container will be restarted if the probe fails
+          livenessProbe:
+            exec:
+              command:
+                - /bin/sh
+                - -c
+                - openssl s_client -showcerts -connect localhost:9025 </dev/null >/dev/null
+            initialDelaySeconds: 5
+            periodSeconds: 30
+            failureThreshold: 3
+            successThreshold: 1
+          # Compute resources required by this container
+          resources:
+            requests:
+              memory: "8Mi"
+              cpu: "50m"
+            limits:
+              memory: "64Mi"
+              cpu: "200m"
+        # SMTP Server
+        - name: smtp-fake-server
+          # Container image
+          image: docker.io/gessnerfl/fake-smtp-server:1.4.0
+          # Environment configuration
+          env:
+            - name: JAVA_OPTS
+              value: -Dspring.config.location=/opt/configuration/application.properties
+          # List of ports to expose from the container
+          ports:
+            - name: smtp
+              containerPort: 5025
+            - name: http
+              containerPort: 5080
+            - name: http-mgt
+              containerPort: 5081
+          # Mounts from .spec.volumes
+          volumeMounts:
+            - name: configuration
+              mountPath: /opt/configuration
+              readOnly: true
+          # Container will be restarted if the probe fails
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: http-mgt
+            initialDelaySeconds: 30
+            periodSeconds: 5
+            failureThreshold: 3
+            successThreshold: 1
+          # Container will be removed from service endpoints if the probe fails
+          readinessProbe:
+            httpGet:
+              path: /actuator/metrics
+              port: http-mgt
+            initialDelaySeconds: 30
+            periodSeconds: 5
+            failureThreshold: 3
+            successThreshold: 1
+          # Compute resources required by this container
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "50m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+      volumes:
+        - name: certificates
+          secret:
+            secretName: smtp-fake-starttls-cert
+            defaultMode: 0775
+            items:
+              - key: tls.crt
+                path: service.crt
+              - key: tls.key
+                path: service.key
+        - name: configuration
+          secret:
+            secretName: smtp-fake-configuration

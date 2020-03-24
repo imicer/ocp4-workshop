@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Route
+metadata:
+  name: smtp-fake-gui
+  labels:
+    route-type: public
+spec:
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
+  to:
+    kind: Service
+    name: smtp-fake-server
+  port:
+    targetPort: http
