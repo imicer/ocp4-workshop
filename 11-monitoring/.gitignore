@@ -1,0 +1,4 @@
+alertmanager/*
+grafana/datasources/*
+!*/*.tpl
+!*/*/*.tpl
