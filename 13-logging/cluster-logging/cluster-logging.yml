@@ -8,7 +8,7 @@ spec:
   logStore:
     type: elasticsearch
     elasticsearch:
-      nodeCount: 3
+      nodeCount: 2
       redundancyPolicy: SingleRedundancy
       storage:
         size: 50G

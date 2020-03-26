@@ -25,7 +25,7 @@ spec:
             cpu: 500m
             memory: 650Mi
         storage:
-          class: gp2
+          class: ocs-storagecluster-ceph-rbd
           size: 5Gi
       server:
         resources:
@@ -63,7 +63,7 @@ spec:
       sharedPVC:
         storageClass: ocs-storagecluster-cephfs
         createPVC: true
-        size: 20Gi
+        size: 10Gi
   permissions:
     # This also gives permissions query the results from the reporting REST API.
     reportingViewers:

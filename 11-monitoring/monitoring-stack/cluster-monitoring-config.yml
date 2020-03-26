@@ -15,7 +15,7 @@ data:
           storageClassName: ocs-storagecluster-ceph-rbd
           resources:
             requests:
-              storage: 10Gi
+              storage: 5Gi
     prometheusK8s:
       nodeSelector:
         node-role.kubernetes.io/infra: ""
