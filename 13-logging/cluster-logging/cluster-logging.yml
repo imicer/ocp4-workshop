@@ -30,7 +30,7 @@ spec:
   curation:
     type: curator
     curator:
-      schedule: 0 * * * * # Every hour
+      schedule: 30 3 * * *
     nodeSelector:
       node-role.kubernetes.io/infra: ""
   collection:
