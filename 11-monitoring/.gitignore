@@ -1,4 +1,7 @@
+# Ignore files and folders
 alertmanager/*
 grafana/datasources/*
+
+# Do not ignore the following files
 !*/*.tpl
 !*/*/*.tpl
