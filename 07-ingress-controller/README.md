@@ -2,7 +2,7 @@
 
 Configure default ingress controller and deploy additional ones for consuming Openshift services from outside the cluster.
 
-### Configuration
+## Configuration
 
 An ingress controller is a reverse proxy to route traffic from external requests to internal pods. The minimal specification for an ingress controller is the following.
 
@@ -17,7 +17,7 @@ spec:
   domain: apps.example.internal
 ```
 
-#### Default certificate
+### Default certificate
 
 A wildcard certificate can be used for those applications that do not use TLS. Generate or request a TLS certificate (tls.crt and tls.key) and create a secret from it.
 
@@ -34,7 +34,7 @@ spec:
     name: internal-apps-cert
 ```
 
-#### Node placement
+### Node placement
 
 Select the nodes where the ingress controller pods will be running.
 
@@ -47,7 +47,7 @@ spec:
         node-role.kubernetes.io/infra: ""
 ```
 
-#### Namespace selector
+### Namespace selector
 
 Restrict which namespaces can use an ingress controllers.
 
@@ -59,7 +59,7 @@ spec:
       ingress-traffic.opentlc.com/internal: ""
 ```
 
-#### Route selector
+### Route selector
 
 Allow application to use different ingress controller to expose traffic.
 
@@ -71,7 +71,7 @@ spec:
       route-type: internal
 ```
 
-#### Publishing strategy
+### Publishing strategy
 
 Deploy the ingress controller base on to the environment features (baremetal or cloud provider).
 
