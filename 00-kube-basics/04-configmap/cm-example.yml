@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cm-example
+data:
+  config.json: |
+    {
+        "datacenter": "room-1",
+        "environment": "development"
+    }

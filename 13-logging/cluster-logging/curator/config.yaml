@@ -6,7 +6,7 @@
 # Log retention for operations index
 .operations:
  delete:
-   days: 2
+   days: 1
 
 # Log retention for applications index
 .regex:

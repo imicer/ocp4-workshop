@@ -27,7 +27,7 @@ data:
           resources:
             requests:
               storage: 20Gi
-      retention: 7d
+      retention: 1d
     prometheusOperator:
       nodeSelector:
         node-role.kubernetes.io/infra: ""

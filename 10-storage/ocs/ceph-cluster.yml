@@ -26,7 +26,7 @@ spec:
             - ReadWriteOnce
           resources:
             requests:
-              storage: 100Gi
+              storage: 500Gi
           storageClassName: gp2 # Change
           volumeMode: Block
       resources: {}
