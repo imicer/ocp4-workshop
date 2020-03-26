@@ -18,7 +18,7 @@ oc apply -f 01-pod
 
 ## Deployment
 
-Create a deployment using the imperative command.
+Create a deployment (deploy) using the imperative command.
 
 ```bash
 oc run deployment-example --generator='deployment/apps.v1' --image=ubi8/ubi-minimal --replicas=3 \
@@ -65,7 +65,7 @@ oc scale deploy deployment-example --replicas=1
 
 ## Service
 
-Expose the deployment with a service using the imperative command.
+Expose the deployment with a service (svc) using the imperative command.
 
 ```bash
 oc expose --name="service-example" \
@@ -78,22 +78,21 @@ Create a service using the declarative command.
 oc apply -f 03-svc
 ```
 
-The service can be using different endpoints.
+A Service is an abstraction which defines a logical set of pods and a policy by which to access them, it can be accessed using different endpoints across the cluster.
 
-- <service-name>
-- <service-name>.<namespace-name>.svc
-- <service-name>.<namespace-name>.svc.cluster.local
-
+- `<service-name>` (same namespace)
+- `<service-name>.<namespace-name>.svc` (different namespace)
+- `<service-name>.<namespace-name>.svc.cluster.local` (different namespace)
 
 ## Configmap
 
-Create a configmap using the imperative command.
+Create a configmap (CM) using the imperative command.
 
 ```bash
 oc create cm cm-example --from-file="04-configmap/data/config.json"
 ```
 
-Create a configmap using the declarative command.
+Create a configmap (CM) using the declarative command.
 
 ```bash
 oc appy -f 04-configmap
@@ -115,9 +114,55 @@ oc apply -f 05-secret
 
 **IMPORTANT**: Secrets are used for storing sensitive information and they **[must never be stored as code](https://github.com/zricethezav/gitleaks)**. Use a dedicated tool like **[Vault](https://github.com/hashicorp/vault)** for storing sensitive information.
 
+## Persistent volumes
+
+Create a persistent volume claim (PVC) using the declarative command.
+
+```bash
+oc apply -f 06-pvc/<platform>
+```
+
+When a pod mounts this PVC, the volume is mounted in the node under the following path (see below) and the folder is shared with the pod according to the `.spec.template.spec.volumes` and `.spec.template.spec.container.volumeMounts` configuration.
+
+```bash
+/var
+└── lib
+    └── kubelet
+        └── plugins
+            └── kubernetes.io
+                └── aws-ebs
+                    └── mounts
+                        └── aws
+                            └── <aws-region>
+                                └── <volume-id>
+                                    └── <pvc files> # --volume nodePath:mountPath
+```
+
 ## StatefulSet
 
-WIP
+Create an statefulset (STS) using the declarative command.
+
+```bash
+oc apply -f 07-sts
+```
+
+Measure write performance using **file storage**.
+
+```bash
+$ dd if=/dev/zero of=/tmp/shared-pvc/bytes.zero bs=50k count=10k
+10240+0 records in
+10240+0 records out
+524288000 bytes (524 MB, 500 MiB) copied, 0.238921 s, 2.2 GB/s
+```
+
+Measure write performance using **block storage**.
+
+```bash
+$ dd if=/dev/zero of=/tmp/dedicated-pvc/bytes.zero bs=50k count=10k
+10240+0 records in
+10240+0 records out
+524288000 bytes (524 MB, 500 MiB) copied, 0.335379 s, 1.6 GB/s
+```
 
 ## References
 

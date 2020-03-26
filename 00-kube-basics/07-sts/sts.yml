@@ -1,0 +1,39 @@
+apiVersion: apps/v1beta1
+kind: StatefulSet
+metadata:
+  name: sts-example
+spec:
+  serviceName: service-example
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: sts-example
+    spec:
+      containers:
+        - name: container-one
+          image: ubi8/ubi-minimal:8.1-407
+          imagePullPolicy: IfNotPresent
+          entrypoint: sh
+          command:
+            - sleep
+            - "3600"
+          volumeMounts:
+            - name: volume-example-shared
+              mountPath: /tmp/shared-pvc
+            - name: volume-example-dedicated
+              mountPath: /tmp/dedicated-pvc
+      volumes:
+        - name: volume-example-shared
+          persistentVolumeClaim:
+            claimName: pvc-example-file # RWX or ROX
+  volumeClaimTemplates:
+    - metadata:
+        name: volume-example-dedicated
+      spec:
+        storageClassName: ocs-storagecluster-ceph-rbd
+        accessModes:
+          - ReadWriteOnce # RWO
+        resources:
+          requests:
+            storage: 5Gi
