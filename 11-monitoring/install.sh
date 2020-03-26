@@ -70,4 +70,4 @@ oc create secret generic alertmanager-main --dry-run -o yaml \
     --namespace openshift-monitoring |\
         oc replace secret --filename=- --namespace openshift-monitoring
 
-oc delete pods -l alertmanager=main --namespace openshift-monitoring
+#oc delete pods -l alertmanager=main --namespace openshift-monitoring
