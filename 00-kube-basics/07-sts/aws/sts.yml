@@ -1,0 +1,31 @@
+apiVersion: apps/v1beta1
+kind: StatefulSet
+metadata:
+  name: sts-example
+  labels:
+    application: example
+spec:
+  serviceName: service-example
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: sts-example
+    spec:
+      containers:
+        - name: container-one
+          image: ubi8/ubi-minimal:8.1-407
+          imagePullPolicy: IfNotPresent
+          entrypoint: sh
+          command:
+            - sleep
+            - "3600"
+          volumeMounts:
+            - name: volume-example-dedicated
+              mountPath: /tmp/dedicated-pvc
+      volumes:
+        - name: volume-example-dedicated
+          persistentVolumeClaim:
+            claimName: pvc-example-block # RWO
+      nodeSelector:
+        node-role.kubernetes.io/worker: ""

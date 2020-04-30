@@ -2,6 +2,8 @@ apiVersion: apps/v1beta1
 kind: StatefulSet
 metadata:
   name: sts-example
+  labels:
+    application: example
 spec:
   serviceName: service-example
   replicas: 3

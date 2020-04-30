@@ -1,0 +1,23 @@
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfig
+metadata:
+  labels:
+    machineconfiguration.openshift.io/role: master
+  name: 99-master-ssh
+spec:
+  config:
+    ignition:
+      config: {}
+      security:
+        tls: {}
+      timeouts: {}
+      version: 2.2.0
+    networkd: {}
+    passwd:
+      users:
+        - name: core
+          sshAuthorizedKeys:
+            - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC3ekxTxS4zLlYsW9VgZJUKQuEJPjVRaCQX1Z83dmFu+vV2NYySMR8vq7Ko0so2mI64XDamGvLqrR1H8x24wHiwoeCqEJIcpYiSCuZWdRJJxQ5o8H1tvTcKmHIhkocENflP0e3nBpEti2on/Nr+ZB6R12i0fflbQmXAHxAwFONM/9JCIMg68tOyjkdR2VEhUhoVHOA8+9fzyjzcOBsajHRLn5uXHeRCOUNJ/F3XguAvNZ3WQUCmjTGBRZKzGBpyHYm30te1fUw83Vdpbx1N+qhMVkSDU1d2iYHbRCNbOsKn14qCwN3DrMZdYGuf6zMajZRoSvka5rCANyRSxFFnDV8abgeUGRj505LQfqwwP2vMITHKabX2RttBkf4igW7YvK+ZkD+epTgIOXNRzOBiI+Gfd25NF34w/hGG5moiW7VG2vCd8IbEd65ch5LJxONkFmCD8Ld5akv2YDXKgmUZkBAKOznJxtg8CRpzHzEvSqN1D+PWJ/2posYk3E1tMugXLXVF8XZgTO5RanzCB6OXVXJ3xW+IN8xEXzFWgi9gK4jR8gHCuZ9uc4hGwE6ces6lk0hWqN2HuK4OKFNXfQEZxWs8gR+cQ0b+g0OTPD6JVS68Y2JOjfiUCk/Mne0vwQ94Z5Msb+UCd1dlSMcLdCFu6GGkgPJ446EcPQKa9Wsruk2bxQ== auto-generated@redhat.com
+    storage: {}
+    systemd: {}
+  osImageURL: ""

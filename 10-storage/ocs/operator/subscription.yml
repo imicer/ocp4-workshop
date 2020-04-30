@@ -9,4 +9,4 @@ spec:
   sourceNamespace: openshift-marketplace
   channel: stable-4.2
   installPlanApproval: Automatic
-  startingCSV: ocs-operator.v4.2.2
+  startingCSV: ocs-operator.v4.2.3

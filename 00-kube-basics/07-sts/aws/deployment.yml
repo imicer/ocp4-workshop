@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-example
+  labels:
+    application: example
+    resource: deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      application: example
+      resource: deployment
+  template:
+    metadata:
+      labels:
+        application: example
+        resource: deployment
+    spec:
+      containers:
+        - name: container-one
+          image: ubi8/ubi-minimal:8.1-407
+          imagePullPolicy: IfNotPresent
+          entrypoint: sh
+          command:
+            - sleep
+            - "3600"
+          volumeMounts:
+            - name: volume-example-dedicated
+              mountPath: /tmp/dedicated-pvc
+      volumes:
+        - name: volume-example-dedicated
+          persistentVolumeClaim:
+            claimName: pvc-example-block # RWO
+      nodeSelector:
+        node-role.kubernetes.io/infra: ""

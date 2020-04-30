@@ -3,22 +3,22 @@ kind: MachineSet
 metadata:
   labels:
     machine.openshift.io/cluster-api-cluster: ${OCP_CLUSTER_ID}
-  name: ${OCP_CLUSTER_ID}-infra-${OCP_NODE_AZ}
+  name: ${OCP_CLUSTER_ID}-ocs-${OCP_NODE_AZ}
   namespace: openshift-machine-api
 spec:
   replicas: 1
   selector:
     matchLabels:
       machine.openshift.io/cluster-api-cluster: ${OCP_CLUSTER_ID}
-      machine.openshift.io/cluster-api-machineset: ${OCP_CLUSTER_ID}-infra-${OCP_NODE_AZ}
+      machine.openshift.io/cluster-api-machineset: ${OCP_CLUSTER_ID}-ocs-${OCP_NODE_AZ}
   template:
     metadata:
       creationTimestamp: null
       labels:
         machine.openshift.io/cluster-api-cluster: ${OCP_CLUSTER_ID}
-        machine.openshift.io/cluster-api-machine-role: infra
-        machine.openshift.io/cluster-api-machine-type: infra
-        machine.openshift.io/cluster-api-machineset: ${OCP_CLUSTER_ID}-infra-${OCP_NODE_AZ}
+        machine.openshift.io/cluster-api-machine-role: ocs
+        machine.openshift.io/cluster-api-machine-type: ocs
+        machine.openshift.io/cluster-api-machineset: ${OCP_CLUSTER_ID}-ocs-${OCP_NODE_AZ}
     spec:
       metadata:
         creationTimestamp: null
@@ -28,13 +28,13 @@ spec:
           kind: AWSMachineProviderConfig
           metadata:
             creationTimestamp: null
-          instanceType: m5.xlarge
+          instanceType: m5.4xlarge # OCS requirement
           ami:
             id: ami-092b69120ecf915ed
           iamInstanceProfile:
             id: ${OCP_CLUSTER_ID}-worker-profile
           userDataSecret:
-            name: infra-user-data
+            name: ocs-user-data
           credentialsSecret:
             name: aws-cloud-credentials
           blockDevices:
@@ -61,4 +61,4 @@ spec:
             - name: kubernetes.io/cluster/${OCP_CLUSTER_ID}
               value: owned
             - name: node-role.kubernetes.io
-              value: infra
+              value: ocs

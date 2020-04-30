@@ -9,4 +9,4 @@ spec:
   sourceNamespace: openshift-marketplace
   channel: "4.2"
   installPlanApproval: Automatic
-  startingCSV: clusterlogging.4.2.23-202003090920
+  startingCSV: clusterlogging.4.2.29-202004140532
