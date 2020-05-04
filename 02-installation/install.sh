@@ -6,7 +6,7 @@ set -o pipefail # return the exit code of the last command that threw a non-zero
 
 # Input variables
 OCP_ENVIRONMENT="$1"
-OCP_VERSION="4.3.13"
+OCP_VERSION="4.4.3"
 
 # Generate SSH key
 if [ ! -f "ssh/id_rsa" ]; then

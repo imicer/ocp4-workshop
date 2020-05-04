@@ -40,28 +40,28 @@ for OCP_INFRA_NODE in ${OCP_INFRA_NODES}; do
 done
 
 # Create OCS nodes
-oc get secret worker-user-data --template={{.data.userData}} -n openshift-machine-api \
-    | base64 -d > ignition/ocs.json
+# oc get secret worker-user-data --template={{.data.userData}} -n openshift-machine-api \
+#     | base64 -d > ignition/ocs.json
 
-oc create secret generic ocs-user-data \
-    --from-literal="disableTemplating=true" \
-    --from-file="userData=ignition/ocs.json" \
-    --namespace openshift-machine-api || true
+# oc create secret generic ocs-user-data \
+#     --from-literal="disableTemplating=true" \
+#     --from-file="userData=ignition/ocs.json" \
+#     --namespace openshift-machine-api || true
 
-if [ "${OCP_CLOUD_PROVIDER}" == "aws" ]; then
-    for CLUSTER_AZ in "${AWS_ZONES[@]}"; do
-        export OCP_NODE_AZ="${OCP_CLUSTER_DATACENTER}${CLUSTER_AZ}"
-        envsubst < machineset/aws/ocs.yml.tpl | oc apply -f -
-    done
-else
-  echo "${OCP_CLOUD_PROVIDER} provider is not supported yet"
-fi
+# if [ "${OCP_CLOUD_PROVIDER}" == "aws" ]; then
+#     for CLUSTER_AZ in "${AWS_ZONES[@]}"; do
+#         export OCP_NODE_AZ="${OCP_CLUSTER_DATACENTER}${CLUSTER_AZ}"
+#         envsubst < machineset/aws/ocs.yml.tpl | oc apply -f -
+#     done
+# else
+#   echo "${OCP_CLOUD_PROVIDER} provider is not supported yet"
+# fi
 
-OCP_OCS_NODES="$(oc get machine -l "machine.openshift.io/cluster-api-machine-role=ocs" \
-  -o jsonpath="{.items[?(@.status.nodeRef)].status.nodeRef.name}" -n openshift-machine-api)"
+# OCP_OCS_NODES="$(oc get machine -l "machine.openshift.io/cluster-api-machine-role=ocs" \
+#   -o jsonpath="{.items[?(@.status.nodeRef)].status.nodeRef.name}" -n openshift-machine-api)"
 
-for OCP_OCS_NODE in ${OCP_OCS_NODES}; do
-    oc label node ${OCP_OCS_NODE} --overwrite=true \
-        node-role.kubernetes.io/worker- \
-        node-role.kubernetes.io/ocs=
-done
+# for OCP_OCS_NODE in ${OCP_OCS_NODES}; do
+#     oc label node ${OCP_OCS_NODE} --overwrite=true \
+#         node-role.kubernetes.io/worker- \
+#         node-role.kubernetes.io/ocs=
+# done

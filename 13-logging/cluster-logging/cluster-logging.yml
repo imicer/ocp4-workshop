@@ -8,15 +8,16 @@ spec:
   logStore:
     type: elasticsearch
     elasticsearch:
-      nodeCount: 2
+      nodeCount: 3
       redundancyPolicy: SingleRedundancy
       storage:
         size: 50G
-        storageClassName: ocs-storagecluster-ceph-rbd
+        storageClassName: gp2
       nodeSelector:
         node-role.kubernetes.io/infra: ""
       resources:
         limits:
+          cpu: "2"
           memory: "16Gi"
         requests:
           cpu: "2"

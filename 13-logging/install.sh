@@ -5,10 +5,10 @@ set -o nounset  # exit when use undeclared variables
 set -o pipefail # return the exit code of the last command that threw a non-zero
 
 # Get input variables
-ELASTIC_OPERATOR_VERSION="elasticsearch-operator.4.2.29-202004140532"
+ELASTIC_OPERATOR_VERSION="elasticsearch-operator.4.4.0-202004261927"
 ELASTIC_OPERATOR_STATUS="Installing"
 
-CLOGGING_OPERATOR_VERSION="clusterlogging.4.2.29-202004140532"
+CLOGGING_OPERATOR_VERSION="clusterlogging.4.4.0-202004261927"
 CLOGGING_OPERATOR_STATUS="Installing"
 
 # Install Elasticsearch operator
